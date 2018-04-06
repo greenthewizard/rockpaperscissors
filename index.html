@@ -6,7 +6,7 @@
 <body>
 	<div id="rps">
 		<p>
-			Computer chooses ... <span id="cpu-choice"></span>
+			The results are ... <span id="cpu-choice"></span>
 		</p>
 	</div>
 	<script type="text/javascript">
@@ -17,13 +17,45 @@
 		}
 
 		function computerPlay() {
-			let choices = ["Rock", "Paper", "Scissors"];
+			let choices = ["rock", "paper", "scissors"];
 			return choices[randInt(0, choices.length - 1)];
 		}
 
+		function rps(playerSelection, computerSelection) {
+			let choices = ["rock", "paper", "scissors"];
+			playerSelection = playerSelection.toLowerCase();
+			computerSelection = computerSelection.toLowerCase();
+
+			if (choices.indexOf(playerSelection) === -1) {
+				return "You lose! Cheaters always lose..";
+			} else if (choices.indexOf(computerSelection) === -1) {
+				return "You win! The computer cheated... somehow.";
+			} else if (playerSelection === computerSelection) {
+				return "Tie! " + playerSelection + " vs " + computerSelection + "!"
+			} else if (playerSelection === "rock") {
+				if (computerSelection === "scissors") {
+					return "You Win! Rock beats Paper!";
+				} else {
+					return "You Lose! Paper beats Rock!";
+				}
+			} else if (playerSelection === "paper") {
+				if (computerSelection === "rock") {
+					return "You Win! Paper beats Rock!";
+				} else {
+					return "You Lose! Scissors beats Paper!";
+				}
+			} else if (playerSelection === "scissors") {
+				if (computerSelection === "paper") {
+					return "You Win! Scissors beats Paper!";
+				} else {
+					return "You Lose! Rock beats Scissors!";
+				}
+			}
+		}
+
 		setInterval(function() {
-			$cpuChoice.innerHTML = computerPlay() + "!";
-		}, 300);
+			$cpuChoice.innerHTML = rps(computerPlay(), computerPlay());
+		}, 600);
 	</script>
 </body>
 </html>
