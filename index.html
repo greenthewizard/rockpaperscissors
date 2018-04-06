@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Rock, Paper, Scissors</title>
+</head>
+<body>
+	<div id="rps">
+		<p>
+			Computer chooses ... <span id="cpu-choice"></span>
+		</p>
+	</div>
+	<script type="text/javascript">
+		$cpuChoice = document.getElementById("cpu-choice");
+
+		function randInt(min, max) {
+			return Math.floor(Math.random() * (max - min + 1)) + min;
+		}
+
+		function computerPlay() {
+			let choices = ["Rock", "Paper", "Scissors"];
+			return choices[randInt(0, choices.length - 1)];
+		}
+
+		setInterval(function() {
+			$cpuChoice.innerHTML = computerPlay() + "!";
+		}, 300);
+	</script>
+</body>
+</html>
