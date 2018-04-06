@@ -5,15 +5,19 @@
 </head>
 <body>
 	<div id="rps">
-		<p>
-			The results are ... <span id="cpu-choice"></span>
-		</p>
+		<h1>Rock, Paper, Scissors</h1>
+		<div id="game-console">
+		</div>
 	</div>
 	<script type="text/javascript">
-		$cpuChoice = document.getElementById("cpu-choice");
+		$rps = document.getElementById("rps");
 
 		function randInt(min, max) {
 			return Math.floor(Math.random() * (max - min + 1)) + min;
+		}
+
+		function capitalizeFirstLetter(string) {
+			return string.charAt(0).toUpperCase() + string.slice(1);
 		}
 
 		function computerPlay() {
@@ -23,39 +27,87 @@
 
 		function rps(playerSelection, computerSelection) {
 			let choices = ["rock", "paper", "scissors"];
-			playerSelection = playerSelection.toLowerCase();
-			computerSelection = computerSelection.toLowerCase();
+			//If player hits cancel, avoid null for playerSelection.
+			playerSelection = playerSelection ? playerSelection : "empty";
+
+			let gameObj = {
+				playerSelection: playerSelection.toLowerCase(),
+				computerSelection: computerSelection.toLowerCase(),
+				resultMsg: "...",
+				scorePlayer: 0,
+				scoreComputer: 0
+			};
 
 			if (choices.indexOf(playerSelection) === -1) {
-				return "You lose! Cheaters always lose..";
+				gameObj.resultMsg = "You lose! Cheaters always lose..";
+				gameObj.scoreComputer++;
 			} else if (choices.indexOf(computerSelection) === -1) {
-				return "You win! The computer cheated... somehow.";
+				gameObj.resultMsg = "You win! The computer cheated... somehow.";
+				gameObj.scorePlayer++;
 			} else if (playerSelection === computerSelection) {
-				return "Tie! " + playerSelection + " vs " + computerSelection + "!"
+				gameObj.resultMsg = "Tie! " + capitalizeFirstLetter(playerSelection) + " vs " + capitalizeFirstLetter(computerSelection) + "!"
 			} else if (playerSelection === "rock") {
 				if (computerSelection === "scissors") {
-					return "You Win! Rock beats Paper!";
+					gameObj.resultMsg = "You Win! Rock beats Paper!";
+					gameObj.scorePlayer++;
 				} else {
-					return "You Lose! Paper beats Rock!";
+					gameObj.resultMsg = "You Lose! Paper beats Rock!";
+					gameObj.scoreComputer++;
 				}
 			} else if (playerSelection === "paper") {
 				if (computerSelection === "rock") {
-					return "You Win! Paper beats Rock!";
+					gameObj.resultMsg = "You Win! Paper beats Rock!";
+					gameObj.scorePlayer++;
 				} else {
-					return "You Lose! Scissors beats Paper!";
+					gameObj.resultMsg = "You Lose! Scissors beats Paper!";
+					gameObj.scoreComputer++;
 				}
 			} else if (playerSelection === "scissors") {
 				if (computerSelection === "paper") {
-					return "You Win! Scissors beats Paper!";
+					gameObj.resultMsg = "You Win! Scissors beats Paper!";
+					gameObj.scorePlayer++;
 				} else {
-					return "You Lose! Rock beats Scissors!";
+					gameObj.resultMsg = "You Lose! Rock beats Scissors!";
+					gameObj.scoreComputer++;
 				}
+			}
+
+			return gameObj;
+		}
+
+		function logToGameConsole(msg) {
+			let $elem = document.createElement("p");
+			let content = document.createTextNode(msg);
+
+			$elem.appendChild(content);
+			$rps.appendChild($elem);
+		}
+
+		function game(numGames) {
+			let score = [0, 0];
+			for(let i = 0; i < numGames; i++) {
+				let playerSelection = prompt("Rock, Paper, or Scissors?");
+				let computerSelection = computerPlay();
+				let lastGame = rps(playerSelection, computerSelection);
+
+				score[0] += lastGame.scorePlayer;
+				score[1] += lastGame.scoreComputer;
+				logToGameConsole(lastGame.resultMsg);
+				console.log(lastGame.resultMsg);
+			}
+
+			logToGameConsole("Game over!");
+			logToGameConsole("Final score is ... Player: " + score[0] + " Computer: " + score[1]);
+			if (score[0] > score[1]) {
+				logToGameConsole("You win!");
+			} else if (score[0] === score[1]) {
+				logToGameConsole("Tie game!");
+			} else {
+				logToGameConsole("You lose!");
 			}
 		}
 
-		setInterval(function() {
-			$cpuChoice.innerHTML = rps(computerPlay(), computerPlay());
-		}, 600);
+		game(4);
 	</script>
 </body>
 </html>
