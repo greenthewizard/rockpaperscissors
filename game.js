@@ -78,7 +78,6 @@ function cpuPlay() {
 function play(p1, p2) {
 	let p1Win = p1.beats.indexOf(p2.name);
 	let p2Win = p2.beats.indexOf(p1.name);
-	console.log(p1Win);
 
 	if (p1Win >= 0) {
 		//p1 wins!
