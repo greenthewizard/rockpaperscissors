@@ -1,0 +1,42 @@
+#rps {
+	width: 600px;
+	margin: auto;
+	font-family: "Do Hyeon";
+}
+h1 {
+	text-align: center;
+	font-size: 1.6em;
+}
+#options-list {
+	width: 500px;
+	margin: auto;
+}
+#options-list li {
+	list-style: none;
+	float: left;
+	margin: 0 5px;
+	text-align: center;
+}
+
+#options-list li a {
+	text-decoration: none;
+	width: 80px;
+	height: 80px;
+	line-height: 80px;
+	border: 4px solid #007cba;
+	border-radius: 100%;
+	display: inline-block;
+	background-color: #88c5e8;
+	color: #000;
+}
+
+#options-list li a:active {
+	background-color: #bce8ff;
+	color: #f00;
+}
+
+#p-town {
+	clear: left;
+	padding-top: 10px;
+	text-align: center;
+}
